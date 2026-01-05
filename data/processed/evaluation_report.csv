@@ -1,0 +1,13 @@
+Model,Dataset,MAE,MSE,RMSE,R2,MAPE
+Linear Regression,Train,0.3407,0.4763,0.6901,0.526,1.0365
+Linear Regression,Validation,0.334,0.444,0.6663,0.5076,1.1297
+Linear Regression,Test,0.3388,0.4785,0.6918,0.5176,1.0533
+Random Forest,Train,0.2076,0.141,0.3755,0.8597,0.7789
+Random Forest,Validation,0.3172,0.4267,0.6533,0.5268,1.266
+Random Forest,Test,0.3286,0.4575,0.6764,0.5388,1.2281
+Gradient Boosting,Train,0.2648,0.2651,0.5149,0.7362,0.9285
+Gradient Boosting,Validation,0.3155,0.4289,0.6549,0.5243,1.2131
+Gradient Boosting,Test,0.3204,0.4534,0.6734,0.5429,1.142
+XGBoost,Train,0.2626,0.2659,0.5156,0.7354,0.9179
+XGBoost,Validation,0.3126,0.4252,0.6521,0.5284,1.2056
+XGBoost,Test,0.3196,0.4452,0.6673,0.5512,1.1599
