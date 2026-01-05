@@ -75,7 +75,7 @@ venv.bak/
 
 # Data and Models
 data/raw/*.csv
-models/*.pkl
+# models/*.pkl  # Commented out - models needed for Streamlit deployment
 models/*.h5
 logs.txt
 
