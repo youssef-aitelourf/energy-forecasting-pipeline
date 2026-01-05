@@ -140,7 +140,29 @@ def make_prediction(model, scaler, feature_names, features):
         # Create DataFrame with features
         df = pd.DataFrame([features])
         
-        # Ensure all required features are present
+        # Scale features if scaler is available (before adding missing features)
+        if scaler is not None:
+            # Get scaler's expected features
+            scaler_features = scaler.feature_names_in_
+            
+            # Add missing scaler features with 0
+            for col in scaler_features:
+                if col not in df.columns:
+                    df[col] = 0
+            
+            # Scale only the features the scaler knows about
+            df_to_scale = df[scaler_features].copy()
+            df_scaled = pd.DataFrame(
+                scaler.transform(df_to_scale),
+                columns=scaler_features,
+                index=df.index
+            )
+            
+            # Replace scaled values in original dataframe
+            for col in scaler_features:
+                df[col] = df_scaled[col]
+        
+        # Now ensure all model features are present
         if feature_names is not None:
             # Add missing features with 0
             for col in feature_names:
@@ -149,21 +171,14 @@ def make_prediction(model, scaler, feature_names, features):
             # Reorder columns to match training
             df = df[feature_names]
         
-        # Scale features if scaler is available
-        if scaler is not None:
-            # Only transform columns that exist in both
-            common_cols = [col for col in scaler.feature_names_in_ if col in df.columns]
-            if common_cols:
-                df_scaled = df.copy()
-                df_scaled[common_cols] = scaler.transform(df[common_cols])
-                df = df_scaled
-        
         # Make prediction
         prediction = model.predict(df)[0]
         
         return prediction, df
     except Exception as e:
         st.error(f"Error making prediction: {str(e)}")
+        import traceback
+        st.error(traceback.format_exc())
         return None, None
 
 def plot_prediction_gauge(prediction):
